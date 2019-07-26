@@ -22,11 +22,12 @@ namespace my_new_app.Context
 	public class Card
 	{
 		public int Id { get; set; }
+		public string Name { get; set; }
 		public int Cost { get; set; }
 		public string Type { get; set; }
-		public int Value { get; set; }
-		public int Effects { get; set; }
-		public int Color { get; set; }
+		public string Effects { get; set; }
+		public string Color { get; set; }
+		public bool Upgraded { get; set; }
 	}
 
 	public class Enemy

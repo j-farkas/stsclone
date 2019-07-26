@@ -2,7 +2,7 @@
 
 namespace my_new_app.Migrations
 {
-    public partial class initialcreate : Migration
+    public partial class SecondIteration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

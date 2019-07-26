@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using my_new_app.Context;
 
 namespace my_new_app.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190726213425_SecondIteration")]
+    partial class SecondIteration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,17 +43,15 @@ namespace my_new_app.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Color");
+                    b.Property<int>("Color");
 
                     b.Property<int>("Cost");
 
-                    b.Property<string>("Effects");
-
-                    b.Property<string>("Name");
+                    b.Property<int>("Effects");
 
                     b.Property<string>("Type");
 
-                    b.Property<bool>("Upgraded");
+                    b.Property<int>("Value");
 
                     b.HasKey("Id");
 

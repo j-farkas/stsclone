@@ -9,8 +9,8 @@ using my_new_app.Context;
 namespace my_new_app.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190725165716_initialcreate")]
-    partial class initialcreate
+    [Migration("20190726214248_FifthIteration")]
+    partial class FifthIteration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,13 +43,17 @@ namespace my_new_app.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Color");
+                    b.Property<string>("Color");
 
                     b.Property<int>("Cost");
 
-                    b.Property<int>("Effects");
+                    b.Property<string>("Effects");
+
+                    b.Property<string>("Name");
 
                     b.Property<string>("Type");
+
+                    b.Property<bool>("Upgraded");
 
                     b.Property<int>("Value");
 
