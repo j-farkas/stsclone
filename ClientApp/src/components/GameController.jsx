@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Home from './Home';
+import GameStart from './GameStart';
 // import { AsyncComponentProvider, createAsyncContext } from 'react-async-component';
 // import asyncBootstrapper from 'react-async-bootstrapper';
 // import './GameController.css';
@@ -34,7 +35,8 @@ export class GameController extends React.Component {
       // });
 
     this.state = {
-      home: true
+      home: true,
+      start: false
   //     loading: true,
   //     deck: [],
   //     game: {
@@ -57,15 +59,19 @@ export class GameController extends React.Component {
   //       }
       }
   //   this.selectCard = this.selectCard.bind(this);
-  //   this.handleDeselectCard = this.handleDeselectCard.bind(this);
-  //   this.handleDropCard = this.handleDropCard.bind(this);
-  //   this.handleSetNull = this.handleSetNull.bind(this);
-  //   this.handleSetSplashFalse = this.handleSetSplashFalse.bind(this);
+        this.handleSetHomeFalse = this.handleSetHomeFalse.bind(this);
+        this.handleGameStart = this.handleGameStart.bind(this);
 }
 
   handleSetHomeFalse() {
     this.state.home = false;
-    this.setState({home: false});
+    this.state.start = true;
+    this.setState({home: false, start: true});
+  }
+
+  handleGameStart(color) {
+    this.state.start = false;
+    this.setState({start: false});
   }
 
   shuffle(deck) {
@@ -172,6 +178,13 @@ export class GameController extends React.Component {
       return(
         <div>
           <Home setHome={this.handleSetHomeFalse} />
+        </div>
+      )
+    }
+    if(this.state.start === true){
+      return(
+        <div>
+          <GameStart GameStart={this.handleGameStart} />
         </div>
       )
     }
