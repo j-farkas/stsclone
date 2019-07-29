@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Home from './Home';
+import Hand from './Hand';
+import Enemy from './Enemy';
 import GameStart from './GameStart';
 // import { AsyncComponentProvider, createAsyncContext } from 'react-async-component';
 // import asyncBootstrapper from 'react-async-bootstrapper';
@@ -18,10 +20,11 @@ export class GameController extends React.Component {
          console.log(this.state);
          let deck = [];
          for(let i = 0; i < 5; i++){
-           deck.push({Id:1, Name: "Strike", Cost: 1, Type: "Attack", Effects: "6 damage", Color: this.state.Color, Upgraded: 0});
-           deck.push({Id:1, Name: "Defend", Cost: 1, Type: "Skill", Effects: "6 block", Color: this.state.Color, Upgraded: 0});
+           deck.push({Id:1, Name: "Strike", Cost: 1, Type: "Attack", Effects: "6 damage", Color: this.state.Color, Upgraded: 0, CardText: "Deal 6 damage"});
+           deck.push({Id:1, Name: "Defend", Cost: 1, Type: "Skill", Effects: "6 block", Color: this.state.Color, Upgraded: 0, CardText: "Block 6 damage"});
          }
          this.setState ({ deck: this.shuffle(deck)});
+         this.setState({hand: this.state.deck.slice(0,5)})
          console.log(this.state);
 
 
@@ -36,10 +39,10 @@ export class GameController extends React.Component {
     //
     //     console.log(this.state.deck);
     //     console.log(this.state.game);
-    //     // this.state.loading = false;
-    //     this.setState({loading: false});
+            this.setState({loading: false});
+            console.log(this.state);
     //     this.setState({game: this.state.game});
-    //     this.render();
+          // this.render();
     //
        console.log("hey")
       });
@@ -47,10 +50,13 @@ export class GameController extends React.Component {
     this.state = {
       home: true,
       start: false,
-      loading: false,
+      loading: true,
       nextEnemy: {},
       class: "Red",
-       deck: []
+      deck: [],
+      hand: [],
+      activeEnemy: {hp:0, nextAttack: ""},
+      player: {hp:100},
   //     game: {
   //       players: [[],[]],
   //       turn: 0,
@@ -73,18 +79,27 @@ export class GameController extends React.Component {
   //   this.selectCard = this.selectCard.bind(this);
         this.handleSetHomeFalse = this.handleSetHomeFalse.bind(this);
         this.handleGameStart = this.handleGameStart.bind(this);
+        this.endTurn = this.endTurn.bind(this);
 }
 
   handleSetHomeFalse() {
-    this.state.home = false;
-    this.state.start = true;
     this.setState({home: false, start: true});
   }
 
   handleGameStart(color) {
-    this.state.start = false;
-    this.state.loading = true;
-    this.setState({start: false, loading: true});
+    this.setState({start: false});
+  }
+
+  endTurn(effect, number, nextAttack){
+    console.log(effect);
+    console.log(number);
+    if(effect === 'damage'){
+      let player = {hp: this.state.player.hp-number};
+      this.setState({player: player})
+    }
+    let activeEnemy = this.state.activeEnemy;
+    activeEnemy.nextAttack = nextAttack;
+    this.setState({activeEnemy: activeEnemy})
   }
 
   shuffle(deck) {
@@ -186,6 +201,7 @@ export class GameController extends React.Component {
     // }
 
   render(){
+    console.log(this.state);
     console.log(window.location.href.split('/'))
     if(this.state.home === true) {
       return(
@@ -202,18 +218,16 @@ export class GameController extends React.Component {
       )
     }
     if(this.state.loading === true){
-      // console.log("hey");
+      // console.log(this.state);
       return(
         <div>Loading..</div>
 
       )
     }else{
-
-      let playerTurn = this.state.game.turn % 2;
-
-
       return(
         <div className="page">
+          <Enemy enemy={this.state.nextEnemy} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
+          <Hand cards={this.state.hand}></Hand>
         </div>
       );
     }

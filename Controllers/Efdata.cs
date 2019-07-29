@@ -27,6 +27,7 @@ namespace my_new_app.Context
 		public int Cost { get; set; }
 		public string Type { get; set; }
 		public string Effects { get; set; }
+		public string CardText { get; set; }
 		public string Color { get; set; }
 		public bool Upgraded { get; set; }
 	}

@@ -6,7 +6,7 @@
 // export class NavMenu extends Component {
 //   static displayName = NavMenu.name;
 //
-//   constructor (props) {
+//   // constructor (props) {
 //     super(props);
 //
 //     this.toggleNavbar = this.toggleNavbar.bind(this);
