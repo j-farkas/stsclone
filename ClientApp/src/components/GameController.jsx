@@ -36,8 +36,8 @@ export class GameController extends React.Component {
 
     this.state = {
       home: true,
-      start: false
-  //     loading: true,
+      start: false,
+      loading: false
   //     deck: [],
   //     game: {
   //       players: [[],[]],
@@ -71,7 +71,8 @@ export class GameController extends React.Component {
 
   handleGameStart(color) {
     this.state.start = false;
-    this.setState({start: false});
+    this.state.loading = true;
+    this.setState({start: false, loading: true});
   }
 
   shuffle(deck) {
