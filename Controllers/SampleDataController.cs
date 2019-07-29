@@ -12,13 +12,13 @@ namespace my_new_app.Controllers
     public class SampleDataController : Controller
     {
 
-        [HttpGet("[action]")]
-        public Enemy Enemies()
+        [HttpGet("Enemies/{level}")]
+        public Enemy Enemies(int level)
         {
           using (var db = new DataContext())
           	{
     					Random rand = new Random();
-    					List<Enemy> theEnemy = db.Enemy.Where(e => e.RewardClass == 1).ToList();
+    					List<Enemy> theEnemy = db.Enemy.Where(e => e.RewardClass == level).ToList();
     					return theEnemy[rand.Next(0,theEnemy.Count-1)];
     				}
     		}

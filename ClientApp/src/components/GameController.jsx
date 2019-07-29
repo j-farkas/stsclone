@@ -12,7 +12,7 @@ export class GameController extends React.Component {
   constructor(props) {
     super(props);
 
-    fetch('api/SampleData/Enemies')
+    fetch('api/SampleData/Enemies/1')
       .then(response => response.json())
       .then(data => {
          console.log(data);
@@ -20,11 +20,12 @@ export class GameController extends React.Component {
          console.log(this.state);
          let deck = [];
          for(let i = 0; i < 5; i++){
-           deck.push({Id:1, Name: "Strike", Cost: 1, Type: "Attack", Effects: "6 damage", Color: this.state.Color, Upgraded: 0, CardText: "Deal 6 damage"});
-           deck.push({Id:1, Name: "Defend", Cost: 1, Type: "Skill", Effects: "6 block", Color: this.state.Color, Upgraded: 0, CardText: "Block 6 damage"});
+           deck.push({Id:1, Name: "Strike", Cost: 1, Type: "Attack", Effects: "6 damage", Color: this.state.class, Upgraded: 0, CardText: "Deal 6 damage"});
+           deck.push({Id:1, Name: "Defend", Cost: 1, Type: "Skill", Effects: "6 block", Color: this.state.class, Upgraded: 0, CardText: "Block 6 damage"});
          }
          this.setState ({ deck: this.shuffle(deck)});
          this.setState({hand: this.state.deck.slice(0,5)})
+         this.setState({deck: this.state.deck.slice(5)});
          console.log(this.state);
 
 
@@ -44,6 +45,18 @@ export class GameController extends React.Component {
     //     this.setState({game: this.state.game});
           // this.render();
     //
+    let attacks = this.state.nextEnemy.attacks.split(',');
+    let random = false;
+    console.log(attacks);
+    if(attacks[0] === 'random'){
+      attacks = attacks.slice(1);
+      random = true;
+    }
+
+    this.state.activeEnemy.nextAttack = attacks[Math.floor((Math.random() * (attacks.length)))];
+    this.setState({activeEnemy: this.state.activeEnemy})
+
+
        console.log("hey")
       });
 
@@ -52,11 +65,14 @@ export class GameController extends React.Component {
       start: false,
       loading: true,
       nextEnemy: {},
+      map: false,
+      battle: false,
       class: "Red",
       deck: [],
       hand: [],
-      activeEnemy: {hp:0, nextAttack: ""},
-      player: {hp:100},
+      discard: [],
+      activeEnemy: {hp:12, nextAttack: ""},
+      player: {hp:100, energy: 3, block: 0},
   //     game: {
   //       players: [[],[]],
   //       turn: 0,
@@ -80,6 +96,7 @@ export class GameController extends React.Component {
         this.handleSetHomeFalse = this.handleSetHomeFalse.bind(this);
         this.handleGameStart = this.handleGameStart.bind(this);
         this.endTurn = this.endTurn.bind(this);
+        this.useCard = this.useCard.bind(this);
 }
 
   handleSetHomeFalse() {
@@ -87,19 +104,62 @@ export class GameController extends React.Component {
   }
 
   handleGameStart(color) {
-    this.setState({start: false});
+    this.setState({start: false, map: true});
   }
 
   endTurn(effect, number, nextAttack){
     console.log(effect);
     console.log(number);
+    this.state.player.energy = 3;
+    this.setState({player: this.state.player})
     if(effect === 'damage'){
-      let player = {hp: this.state.player.hp-number};
-      this.setState({player: player})
+      this.state.player.hp -= number;
+      this.setState({player: this.state.player})
     }
     let activeEnemy = this.state.activeEnemy;
     activeEnemy.nextAttack = nextAttack;
     this.setState({activeEnemy: activeEnemy})
+    while(this.state.hand.length > 0){
+      this.state.discard.push(this.state.hand.pop());
+    }
+    console.log(this.state);
+    while(this.state.hand.length < 5){
+      if(this.state.discard.length > 0){
+        this.setState({deck: this.state.deck.concat(this.shuffle(this.state.discard)),discard: []})
+      }
+      this.state.hand.push(this.state.deck.pop());
+      this.setState({hand: this.state.hand });
+    }
+    this.render();
+    // this.setState({hand: this.state.hand, discard: this.state.discard, deck: this.state.deck});
+  }
+
+  useCard(cardText, index){
+    if(this.state.player.energy >= this.state.hand[index].Cost){
+      let effects = cardText.split(',');
+      effects.forEach((el)=>{
+        let value = parseInt(el.split(' ')[0]);
+        let type = el.split(' ')[1];
+
+        switch(type){
+          case 'damage':
+            this.state.activeEnemy.hp -= value;
+            this.setState({activeEnemy: this.state.activeEnemy});
+          break;
+          case 'block':
+            this.state.player.block += value;
+            this.setState({player: this.state.player})
+          break;
+        }
+      }
+    )
+      console.log(effects);
+      this.state.player.energy -= this.state.hand[index].Cost;
+      this.setState({player: this.state.player});
+      this.state.discard.push(this.state.hand[index]);
+      this.setState({discard: this.state.discard})
+      this.setState({hand: this.state.hand.slice(0,index).concat(this.state.hand.slice(index+1))})
+    }
   }
 
   shuffle(deck) {
@@ -223,11 +283,18 @@ export class GameController extends React.Component {
         <div>Loading..</div>
 
       )
-    }else{
+    }if(this.state.map === true){
+      // console.log(this.state);
+      return(
+        <div><h1>The Map!</h1><h1 onClick={()=>this.setState({map:false, battle: true})}>🦑</h1></div>
+
+
+      )
+    }if(this.state.battle === true){
       return(
         <div className="page">
           <Enemy enemy={this.state.nextEnemy} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
-          <Hand cards={this.state.hand}></Hand>
+          <Hand cards={this.state.hand} useCard = {this.useCard}></Hand>
         </div>
       );
     }

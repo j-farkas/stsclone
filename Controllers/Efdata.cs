@@ -30,6 +30,7 @@ namespace my_new_app.Context
 		public string CardText { get; set; }
 		public string Color { get; set; }
 		public bool Upgraded { get; set; }
+		public int Rarity { get; set; }
 	}
 
 	public class Enemy

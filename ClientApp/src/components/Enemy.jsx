@@ -14,8 +14,8 @@ export default function Enemy(props) {
     random = true;
   }
   console.log(attacks);
-   props.activeEnemy.hp = props.enemy.hp
-   props.activeEnemy.nextAttack = attacks[Math.floor((Math.random() * (attacks.length)))]
+   
+   // props.activeEnemy.nextAttack = attacks[Math.floor((Math.random() * (attacks.length)))]
 
   return(
     <div className='Enemy'>
