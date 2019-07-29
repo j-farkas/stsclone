@@ -29,7 +29,7 @@ namespace my_new_app.Context
 		public string Effects { get; set; }
 		public string CardText { get; set; }
 		public string Color { get; set; }
-		public bool Upgraded { get; set; }
+		public int Upgraded { get; set; }
 		public int Rarity { get; set; }
 	}
 

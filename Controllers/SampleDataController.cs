@@ -22,5 +22,16 @@ namespace my_new_app.Controllers
     					return theEnemy[rand.Next(0,theEnemy.Count-1)];
     				}
     		}
+
+        [HttpGet("Rewards/{level}")]
+        public List<Card> Rewards(int level)
+        {
+          using (var db = new DataContext())
+          	{
+    					 List<Card> theCards = db.Card.Where(e => e.Rarity == level).ToList();
+               return theCards;
+
+    				}
+    		}
     }
 }
