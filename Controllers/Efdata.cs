@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 namespace my_new_app.Context
 {
@@ -9,7 +11,6 @@ namespace my_new_app.Context
 	{
 		public DbSet<Card> Card { get; set; }
 		public DbSet<Enemy> Enemy { get; set; }
-		public DbSet<Attack> Attack { get; set;}
 		public DbSet<Relic> Relic { get; set;}
 		public DbSet<Event> Event { get; set; }
 
@@ -33,17 +34,9 @@ namespace my_new_app.Context
 	public class Enemy
 	{
 		public int Id { get; set; }
-		public List<Attack> Attacks { get; set; }
+		public string Attacks { get; set; }
 		public int RewardClass { get; set; }
 		public int HP { get; set; }
-	}
-
-	public class Attack
-	{
-		public int Id { get; set; }
-		public string Type { get; set; }
-		public int Value { get; set; }
-		public int Effects { get; set; }
 	}
 
 	public class Relic

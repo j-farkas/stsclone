@@ -10,11 +10,21 @@ export class GameController extends React.Component {
   constructor(props) {
     super(props);
 
-    // fetch('api/SampleData/Cards')
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     console.log(data);
-    //     this.setState({ forecasts: data});
+    fetch('api/SampleData/Enemies')
+      .then(response => response.json())
+      .then(data => {
+         console.log(data);
+         this.setState({ nextEnemy: data});
+         console.log(this.state);
+         let deck = [];
+         for(let i = 0; i < 5; i++){
+           deck.push({Id:1, Name: "Strike", Cost: 1, Type: "Attack", Effects: "6 damage", Color: this.state.Color, Upgraded: 0});
+           deck.push({Id:1, Name: "Defend", Cost: 1, Type: "Skill", Effects: "6 block", Color: this.state.Color, Upgraded: 0});
+         }
+         this.setState ({ deck: this.shuffle(deck)});
+         console.log(this.state);
+
+
     //     this.state.deck = this.shuffle(data.slice());
     //     for(let i = 0; i < 10; i++){
     //       this.state.game.players[i%2].push(this.state.deck[i]);
@@ -31,14 +41,16 @@ export class GameController extends React.Component {
     //     this.setState({game: this.state.game});
     //     this.render();
     //
-    //    console.log("hey")
-      // });
+       console.log("hey")
+      });
 
     this.state = {
       home: true,
       start: false,
-      loading: false
-  //     deck: [],
+      loading: false,
+      nextEnemy: {},
+      class: "Red",
+       deck: []
   //     game: {
   //       players: [[],[]],
   //       turn: 0,
@@ -190,7 +202,7 @@ export class GameController extends React.Component {
       )
     }
     if(this.state.loading === true){
-      console.log("hey");
+      // console.log("hey");
       return(
         <div>Loading..</div>
 
