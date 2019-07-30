@@ -87,6 +87,10 @@ export class GameController extends React.Component {
         this.setState({nextEnemy: data})
 
       })
+      this.setState({playerdebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
+      playerbuffs: {str: 0, dex: 0},
+      enemybuffs: {str: 0, dex: 0},
+      enemydebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0}})
   }
 
   handleStartBattle(){
