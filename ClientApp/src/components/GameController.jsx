@@ -96,11 +96,19 @@ export class GameController extends React.Component {
     if(isNaN(index) === false){
       this.state.deck.push(this.state.rewards[index]);
     }
+    this.state.player.energy = 3;
+    this.setState({player: this.state.player})
     this.state.deck = this.shuffle( this.state.deck.concat(this.state.hand).concat(this.state.discard));
-    this.setState({deck: this.state.deck.slice(5), hand: this.state.deck.slice(0,5), discard: []});
-    this.setState({rewards:false, map: true});
+    this.setState({deck: this.state.deck.slice(5), hand: this.state.deck.slice(0,5), discard: [], rewards: []});
+    this.setState({reward:false, map: true});
     console.log(this.state);
+    fetch('api/SampleData/Enemies/2')
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        this.setState({nextEnemy: data})
 
+      })
   }
 
   handleStartBattle(){
@@ -111,6 +119,10 @@ export class GameController extends React.Component {
         data.forEach((el)=>{
           this.state.rewards.push(el)
         })
+        this.state.rewards = this.shuffle(this.state.rewards);
+        while(this.state.rewards.length > 3){
+          this.state.rewards.pop();
+        }
         this.setState({rewards: this.state.rewards});
         console.log(this.state);
         this.render();
