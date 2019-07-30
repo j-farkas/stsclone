@@ -3,6 +3,7 @@ import Home from './Home';
 import Hand from './Hand';
 import Enemy from './Enemy';
 import Reward from './Reward';
+import Header from './NavMenu';
 import GameStart from './GameStart';
 // import { AsyncComponentProvider, createAsyncContext } from 'react-async-component';
 // import asyncBootstrapper from 'react-async-bootstrapper';
@@ -41,11 +42,15 @@ export class GameController extends React.Component {
       battle: false,
       reward: false,
       class: "Red",
+      playerdebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
+      playerbuffs: {str: 0, dex: 0},
+      enemybuffs: {str: 0, dex: 0},
+      enemydebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
       deck: [],
       hand: [],
       discard: [],
       activeEnemy: {hp:12, nextAttack: ""},
-      player: {hp:100, energy: 3, block: 0},
+      player: {hp:100, maxHP: 100, energy: 3, block: 0},
       rewards: []
       }
 
@@ -104,15 +109,37 @@ export class GameController extends React.Component {
       this.state.activeEnemy.nextAttack = this.state.nextEnemy.attacks.split(',')[this.state.nextEnemy.attacks.split(',').length-1];
   }
 
-  endTurn(effect, number, nextAttack){
+  endTurn(number, effect, nextAttack){
     console.log(effect);
     console.log(number);
     this.state.player.energy = 3;
-    this.setState({player: this.state.player})
     if(effect === 'damage'){
-      this.state.player.hp -= number;
+      if(this.state.player.block > number){
+        this.state.player.block -= number;
+      }else{
+        this.state.player.hp -= (number-this.state.player.block);
+      }
       this.setState({player: this.state.player})
+    }else{
+      console.log(effect);
+      this.state.playerdebuffs[effect] += parseInt(number);
+      this.setState({playerdebuffs: this.state.playerdebuffs});
+      //end of turn effects
+      if(this.state.playerdebuffs.vuln > 0){
+        this.state.playerdebuffs.vuln--;
+      }
+      if(this.state.playerdebuffs.weak > 0){
+        this.state.playerdebuffs.weak--;
+      }
+      if(this.state.playerdebuffs.frail > 0){
+        this.state.playerdebuffs.frail--;
+      }
+      if(this.state.playerdebuffs.demonform > 0){
+        this.state.playerbuffs.str+=this.state.playerdebuffs.demonform;
+      }
+      this.setState({playerdebuffs: this.state.playerdebuffs, playerbuffs: this.state.playerbuffs})
     }
+
     let activeEnemy = this.state.activeEnemy;
     activeEnemy.nextAttack = nextAttack;
     this.setState({activeEnemy: activeEnemy})
@@ -132,6 +159,8 @@ export class GameController extends React.Component {
     }
     // this.render();
     this.setState({discard: []});
+    this.state.player.block = 0;
+    this.setState({player: this.state.player})
   }
 
   useCard(cardText, index){
@@ -143,7 +172,7 @@ export class GameController extends React.Component {
         console.log(el);
         switch(type){
           case 'damage':
-            this.state.activeEnemy.hp -= value;
+            this.state.activeEnemy.hp -= value+this.state.playerbuffs.str;
             this.setState({activeEnemy: this.state.activeEnemy});
             if(this.state.activeEnemy.hp <= 0){
               this.setState({battle: false, reward: true})
@@ -154,8 +183,14 @@ export class GameController extends React.Component {
             this.setState({player: this.state.player})
           break;
           case 'draw':
+          for(let i = 0; i < value; i++){
             this.state.hand.push(this.state.deck.shift());
             this.setState({hand: this.state.hand, deck: this.state.deck})
+          }
+          break;
+          case 'demonform':
+            this.state.playerdebuffs.demonform+=value;
+            this.setState({playerdebuffs: this.state.playerdebuffs});
           break;
         }
       }
@@ -207,18 +242,18 @@ export class GameController extends React.Component {
       )
     }if(this.state.map === true){
       return(
-        <div><h1>The Map!</h1><h1 onClick={()=>this.handleStartBattle()}>🦑</h1></div>
+        <div><Header player={this.state.player}></Header><h1>The Map!</h1><h1 onClick={()=>this.handleStartBattle()}>🦑</h1></div>
       )
     }if(this.state.battle === true){
       return(
-        <div className="page">
+        <div className="page"><Header player={this.state.player}></Header>
           <Enemy enemy={this.state.nextEnemy} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
           <Hand cards={this.state.hand} useCard = {this.useCard}></Hand>
         </div>
       );
     }if(this.state.reward === true){
       return(
-        <div className="page">
+        <div className="page"><Header player={this.state.player}></Header>
           <Reward cards={this.state.rewards} pickReward = {this.pickReward}></Reward>
         </div>
       );
