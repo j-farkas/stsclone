@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Card from './Card'
+import Card from './Card';
 
 export default function Reward(props) {
   function pickReward(index){
     props.pickReward(index);
   }
-  
+  console.log(props);
   return(
     <div className='Reward'>
     {props.cards.map((card, index) =>
-      <div onClick={()=>pickReward(card.Effects, index)}className='card${index}'><Card cardInfo={card}></Card></div>
+      <div onClick={()=>pickReward(index)}className='card${index}'><Card cardInfo={card}></Card></div>
     )}
     </div>
   );

@@ -21,8 +21,8 @@ export class GameController extends React.Component {
          console.log(this.state);
          let deck = [];
          for(let i = 0; i < 5; i++){
-           deck.push({Id:1, Name: "Strike", Cost: 1, Type: "Attack", Effects: "6 damage", Color: this.state.class, Upgraded: 0, CardText: "Deal 6 damage"});
-           deck.push({Id:1, Name: "Defend", Cost: 1, Type: "Skill", Effects: "6 block", Color: this.state.class, Upgraded: 0, CardText: "Block 6 damage"});
+           deck.push({id:1, name: "Strike", cost: 1, type: "Attack", effects: "6 damage", color: this.state.class, upgraded: 0, cardText: "Deal 6 damage"});
+           deck.push({id:1, name: "Defend", cost: 1, type: "Skill", effects: "6 block", color: this.state.class, upgraded: 0, cardText: "Block 6 damage"});
          }
          this.setState ({ deck: this.shuffle(deck)});
          this.setState({hand: this.state.deck.slice(0,5)})
@@ -92,11 +92,14 @@ export class GameController extends React.Component {
   }
 
   pickReward(index){
+    console.log(index);
     if(isNaN(index) === false){
-      this.state.deck.push(this.state.deck.rewards[index]);
+      this.state.deck.push(this.state.rewards[index]);
     }
-    this.setState({deck: this.shuffle(this.state.deck)});
+    this.state.deck = this.shuffle( this.state.deck.concat(this.state.hand).concat(this.state.discard));
+    this.setState({deck: this.state.deck.slice(5), hand: this.state.deck.slice(0,5), discard: []});
     this.setState({rewards:false, map: true});
+    console.log(this.state);
 
   }
 
@@ -142,7 +145,7 @@ export class GameController extends React.Component {
   }
 
   useCard(cardText, index){
-    if(this.state.player.energy >= this.state.hand[index].Cost){
+    if(this.state.player.energy >= this.state.hand[index].cost){
       let effects = cardText.split(',');
       effects.forEach((el)=>{
         let value = parseInt(el.split(' ')[0]);
@@ -164,7 +167,7 @@ export class GameController extends React.Component {
       }
     )
       console.log(effects);
-      this.state.player.energy -= this.state.hand[index].Cost;
+      this.state.player.energy -= this.state.hand[index].cost;
       this.setState({player: this.state.player});
       this.state.discard.push(this.state.hand[index]);
       this.setState({discard: this.state.discard})
