@@ -12,7 +12,6 @@ export class GameController extends React.Component {
 
   constructor(props) {
     super(props);
-
     fetch('api/SampleData/Enemies/1')
       .then(response => response.json())
       .then(data => {
@@ -28,34 +27,8 @@ export class GameController extends React.Component {
          this.setState({hand: this.state.deck.slice(0,5)})
          this.setState({deck: this.state.deck.slice(5)});
          console.log(this.state);
-
-
-    //     this.state.deck = this.shuffle(data.slice());
-    //     for(let i = 0; i < 10; i++){
-    //       this.state.game.players[i%2].push(this.state.deck[i]);
-    //     }
-    //     for(let i = 0; i < 5; i++){
-    //       this.state.game.players[0][i].owner = 'b';
-    //       this.state.game.players[1][i].owner = 'r';
-    //     }
-    //
-    //     console.log(this.state.deck);
-    //     console.log(this.state.game);
-            this.setState({loading: false});
-            console.log(this.state);
-    //     this.setState({game: this.state.game});
-          // this.render();
-    //
-    let attacks = this.state.nextEnemy.attacks.split(',');
-    let random = false;
-    console.log(attacks);
-    if(attacks[0] === 'random'){
-      attacks = attacks.slice(1);
-      random = true;
-    }
-
-    this.state.activeEnemy.nextAttack = attacks[Math.floor((Math.random() * (attacks.length)))];
-    this.setState({activeEnemy: this.state.activeEnemy})
+        this.setState({loading: false});
+        console.log(this.state);
 
       });
 
@@ -127,6 +100,8 @@ export class GameController extends React.Component {
         console.log(this.state);
         this.render();
       })
+      this.state.activeEnemy.hp = this.state.nextEnemy.hp;
+      this.state.activeEnemy.nextAttack = this.state.nextEnemy.attacks.split(',')[this.state.nextEnemy.attacks.split(',').length-1];
   }
 
   endTurn(effect, number, nextAttack){
@@ -144,16 +119,19 @@ export class GameController extends React.Component {
     while(this.state.hand.length > 0){
       this.state.discard.push(this.state.hand.pop());
     }
+    this.setState({discard: this.state.discard});
+    while(this.state.discard.length > 0){
+        this.state.deck.push(this.state.discard.pop())
+    }
     console.log(this.state);
     while(this.state.hand.length < 5){
-      if(this.state.discard.length > 0){
-        this.setState({deck: this.state.deck.concat(this.shuffle(this.state.discard)),discard: []})
-      }
-      this.state.hand.push(this.state.deck.pop());
-      this.setState({hand: this.state.hand });
+      this.state.hand.push(this.state.deck.shift());
+      console.log(this.state.deck);
+      this.setState({hand: this.state.hand, deck: this.state.deck });
+      console.log(this.state.deck);
     }
-    this.render();
-    // this.setState({hand: this.state.hand, discard: this.state.discard, deck: this.state.deck});
+    // this.render();
+    this.setState({discard: []});
   }
 
   useCard(cardText, index){
@@ -162,7 +140,7 @@ export class GameController extends React.Component {
       effects.forEach((el)=>{
         let value = parseInt(el.split(' ')[0]);
         let type = el.split(' ')[1];
-
+        console.log(el);
         switch(type){
           case 'damage':
             this.state.activeEnemy.hp -= value;
@@ -174,6 +152,10 @@ export class GameController extends React.Component {
           case 'block':
             this.state.player.block += value;
             this.setState({player: this.state.player})
+          break;
+          case 'draw':
+            this.state.hand.push(this.state.deck.shift());
+            this.setState({hand: this.state.hand, deck: this.state.deck})
           break;
         }
       }
@@ -226,8 +208,6 @@ export class GameController extends React.Component {
     }if(this.state.map === true){
       return(
         <div><h1>The Map!</h1><h1 onClick={()=>this.handleStartBattle()}>🦑</h1></div>
-
-
       )
     }if(this.state.battle === true){
       return(

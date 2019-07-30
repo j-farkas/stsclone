@@ -3,19 +3,18 @@ import PropTypes from 'prop-types';
 
 export default function Enemy(props) {
   function endTurn(effect, number){
-    props.endTurn(effect, number, attacks[Math.floor((Math.random() * (attacks.length)))])
+    props.endTurn(effect, number, attacks[Math.floor((Math.random() * (attacks.length-1)+1))])
   }
 
   let attacks = props.enemy.attacks.split(',');
   let random = false;
   console.log(attacks);
   if(attacks[0] === 'random'){
-    attacks = attacks.slice(1);
+    // attacks = attacks.slice(1);
     random = true;
   }
   console.log(attacks);
-   
-   // props.activeEnemy.nextAttack = attacks[Math.floor((Math.random() * (attacks.length)))]
+
 
   return(
     <div className='Enemy'>
