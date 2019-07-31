@@ -18,15 +18,19 @@ export default function Enemy(props) {
   // if(nextAttack.split(' ')[1] === 'damage'){
   //   nextAttack = nextAttack.split(' '[0]+props.enemybuffs.str) + ' ' + nextAttack.split(' ')[1];
   // }
-  let text = '';
-  if(props.activeEnemy.nextAttack.split(' ')[2] === 'damage'){
-    return(
-      <div className='Enemy'>
-        <h3>Next Attack will apply: {parseInt(props.activeEnemy.nextAttack.split(' ')[1])+props.enemybuffs.str} {props.activeEnemy.nextAttack.split(' ')[2]} HP: {props.activeEnemy.hp}</h3>
-        <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button>
-      </div>
-    );
+  let modifier = 1;
+  if(props.enemydebuffs.weak > 0){
+    modifier *= .5;
   }
+  if(props.activeEnemy.nextAttack.split(' ')[2] === 'damage'){
+
+      return(
+        <div className='Enemy'>
+          <h3>Next Attack will apply: {(parseInt(props.activeEnemy.nextAttack.split(' ')[1])+props.enemybuffs.str)*modifier} {props.activeEnemy.nextAttack.split(' ')[2]} HP: {props.activeEnemy.hp}</h3>
+          <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button>
+        </div>
+      );
+    }
 
   return(
     <div className='Enemy'>
