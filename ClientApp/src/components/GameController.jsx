@@ -5,9 +5,8 @@ import Enemy from './Enemy';
 import Reward from './Reward';
 import Header from './NavMenu';
 import GameStart from './GameStart';
-// import { AsyncComponentProvider, createAsyncContext } from 'react-async-component';
-// import asyncBootstrapper from 'react-async-bootstrapper';
-// import './GameController.css';
+import Deck from './Deck';
+
 
 export class GameController extends React.Component {
 
@@ -41,6 +40,8 @@ export class GameController extends React.Component {
       map: false,
       battle: false,
       reward: false,
+      viewdeck: false,
+      difficulty: 1,
       class: "Red",
       playerdebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
       playerbuffs: {str: 0, dex: 0},
@@ -59,6 +60,7 @@ export class GameController extends React.Component {
         this.endTurn = this.endTurn.bind(this);
         this.pickReward = this.pickReward.bind(this);
         this.useCard = this.useCard.bind(this);
+        this.viewDeck = this.viewDeck.bind(this);
 }
 
   handleSetHomeFalse() {
@@ -67,6 +69,10 @@ export class GameController extends React.Component {
 
   handleGameStart(color) {
     this.setState({start: false, map: true});
+  }
+
+  viewDeck(){
+    this.setState({viewdeck: !this.state.viewdeck});
   }
 
   pickReward(index){
@@ -80,11 +86,11 @@ export class GameController extends React.Component {
     this.setState({deck: this.state.deck.slice(5), hand: this.state.deck.slice(0,5), discard: [], rewards: []});
     this.setState({reward:false, map: true});
     console.log(this.state);
-    fetch('api/SampleData/Enemies/2')
+    fetch('api/SampleData/Enemies/'+this.state.difficulty)
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        this.setState({nextEnemy: data})
+        this.setState({nextEnemy: data, difficulty: this.state.difficulty+1})
 
       })
       this.setState({playerdebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
@@ -95,7 +101,7 @@ export class GameController extends React.Component {
 
   handleStartBattle(){
     this.setState({map:false, battle: true});
-    fetch('api/SampleData/Rewards/1')
+    fetch('api/SampleData/Rewards/'+this.state.difficulty)
       .then(response => response.json())
       .then(data => {
         data.forEach((el)=>{
@@ -231,6 +237,12 @@ export class GameController extends React.Component {
           <Home setHome={this.handleSetHomeFalse} />
         </div>
       )
+    }if(this.state.viewdeck === true){
+      return(
+        <div className="page"><Header player={this.state.player} viewDeck = {this.viewDeck}></Header>
+          <Deck cards={this.state.deck.concat(this.state.hand).concat(this.state.discard)}></Deck>
+        </div>
+      );
     }
     if(this.state.start === true){
       return(
@@ -246,18 +258,18 @@ export class GameController extends React.Component {
       )
     }if(this.state.map === true){
       return(
-        <div><Header player={this.state.player}></Header><h1>The Map!</h1><h1 onClick={()=>this.handleStartBattle()}>🦑</h1></div>
+        <div><h1>The Map!</h1><h1 onClick={()=>this.handleStartBattle()}>🦑</h1></div>
       )
     }if(this.state.battle === true){
       return(
-        <div className="page"><Header player={this.state.player}></Header>
+        <div className="page"><Header player={this.state.player} viewDeck = {this.viewDeck}></Header>
           <Enemy enemy={this.state.nextEnemy} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
           <Hand cards={this.state.hand} useCard = {this.useCard}></Hand>
         </div>
       );
     }if(this.state.reward === true){
       return(
-        <div className="page"><Header player={this.state.player}></Header>
+        <div className="page"><Header player={this.state.player} viewDeck = {this.viewDeck}></Header>
           <Reward cards={this.state.rewards} pickReward = {this.pickReward}></Reward>
         </div>
       );

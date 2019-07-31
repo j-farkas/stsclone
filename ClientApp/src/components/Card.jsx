@@ -5,7 +5,7 @@ export default function Card(props) {
   return(
     <div className='card'>
       <h6>{props.cardInfo.name} - {props.cardInfo.cardText}</h6>
-      <h6>{props.cardInfo.cost}</h6>
+      <h6>Energy cost:{props.cardInfo.cost}</h6>
 
     </div>
   );

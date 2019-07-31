@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Card from './Card';
+import './Hand.css';
 
 export default function Hand(props) {
   function useCard(cardText, index){

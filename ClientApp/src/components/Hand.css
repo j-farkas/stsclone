@@ -1,0 +1,4 @@
+.Hand {
+  display: grid;
+  grid-template-columns: repeat(7);
+}
