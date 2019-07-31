@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './Home.css';
 
 
 function Home(props){
@@ -7,9 +8,9 @@ function Home(props){
         props.setHome()
     }
     return (
-        <div>
-        <h1>This is the splash screen</h1>
-        <h2 onClick={() => setHome()}>New Game</h2>
+        <div className='Splash'>
+        <h1 className='Splash'>Sts Clone</h1>
+        <hr></hr><h2 className='Splash' onClick={() => setHome()}>Start New Game</h2>
         </div>
     );
 }
