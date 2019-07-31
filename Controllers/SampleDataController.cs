@@ -19,7 +19,8 @@ namespace my_new_app.Controllers
           	{
     					Random rand = new Random();
     					List<Enemy> theEnemy = db.Enemy.Where(e => e.RewardClass == level).ToList();
-    					return theEnemy[rand.Next(0,theEnemy.Count-1)];
+              Console.WriteLine(theEnemy);
+    					return theEnemy[rand.Next(0,theEnemy.Count)];
     				}
     		}
 
