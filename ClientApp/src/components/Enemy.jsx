@@ -10,17 +10,15 @@ export default function Enemy(props) {
   let random = false;
   console.log(props.activeEnemy.nextAttack.split(' ')[2]);
   if(attacks[0] === 'random'){
-    // attacks = attacks.slice(1);
     random = true;
   }
   console.log(parseInt(props.activeEnemy.nextAttack.split(' ')[1])+props.enemybuffs.str+ ' ' + props.activeEnemy.nextAttack.split(' ')[2]);
-  // let nextAttack = props.activeEnemy.nextAttack;
-  // if(nextAttack.split(' ')[1] === 'damage'){
-  //   nextAttack = nextAttack.split(' '[0]+props.enemybuffs.str) + ' ' + nextAttack.split(' ')[1];
-  // }
   let modifier = 1;
   if(props.enemydebuffs.weak > 0){
-    modifier *= .5;
+    modifier = parseInt(modifier * .5);
+  }
+  if(props.playerdebuffs.vuln > 0){
+    modifier = parseInt(modifier * 1.5);
   }
   if(props.activeEnemy.nextAttack.split(' ')[2] === 'damage'){
 
@@ -45,5 +43,7 @@ Enemy.propTypes = {
   activeEnemy: PropTypes.object,
   endTurn: PropTypes.func,
   enemybuffs: PropTypes.object,
-  enemydebuffs: PropTypes.object
+  enemydebuffs: PropTypes.object,
+  playerbuffs: PropTypes.object,
+  playerdebuffs: PropTypes.object,
 }

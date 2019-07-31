@@ -12,5 +12,8 @@ export default function Card(props) {
 }
 
 Card.propTypes = {
-  cardInfo: PropTypes.object
+  cardInfo: PropTypes.object,
+  playerbuffs: PropTypes.object,
+  playerdebuffs: PropTypes.object,
+  enemydebuffs: PropTypes.object
 }

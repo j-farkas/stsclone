@@ -12,6 +12,7 @@ export default function Reward(props) {
     {props.cards.map((card, index) =>
       <div onClick={()=>pickReward(index)}className='card${index}'><Card cardInfo={card}></Card></div>
     )}
+    <div onClick={()=>pickReward('none')}className='card${index}'>Pick None</div>
     </div>
   );
 }

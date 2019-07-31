@@ -350,7 +350,7 @@ export class GameController extends React.Component {
     }
     if(this.state.viewdeck === true){
       return(
-        <div className="page"><Header player={this.state.player} viewDeck = {this.viewDeck}></Header>
+        <div className="page"><Header player={this.state.player} viewDeck ={this.viewDeck}></Header>
           <Deck cards={this.state.deck.concat(this.state.hand).concat(this.state.discard)}></Deck>
         </div>
       );
@@ -374,8 +374,8 @@ export class GameController extends React.Component {
     }if(this.state.battle === true){
       return(
         <div className="page"><Header player={this.state.player} viewDeck = {this.viewDeck}></Header>
-          <Enemy enemy={this.state.nextEnemy} enemybuffs = {this.state.enemybuffs} enemydebuffs = {this.state.enemydebuffs} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
-          <Hand cards={this.state.hand} useCard = {this.useCard}></Hand>
+          <Enemy enemy={this.state.nextEnemy} enemybuffs = {this.state.enemybuffs} enemydebuffs = {this.state.enemydebuffs} playerbuffs = {this.state.playerbuffs} playerdebuffs = {this.state.playerdebuffs} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
+          <Hand  enemybuffs = {this.state.enemybuffs} enemydebuffs = {this.state.enemydebuffs} playerbuffs = {this.state.playerbuffs} playerdebuffs = {this.state.playerdebuffs} cards={this.state.hand} useCard = {this.useCard} player = {this.state.player}></Hand>
         </div>
       );
     }if(this.state.reward === true){

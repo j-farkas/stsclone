@@ -12,7 +12,8 @@ export default function Hand(props) {
   return(
     <div className='Hand'>
       {props.cards.map((card, index) =>
-        <div onClick={()=>useCard(card.effects, index)}className='card${index}'><Card cardInfo={card}></Card></div>
+        <div className={card.cost <=  props.player.energy ? 'available' : 'not'}
+            onClick={()=>useCard(card.effects, index)}><Card enemybuffs = {props.enemybuffs} enemydebuffs = {props.enemydebuffs} playerbuffs = {props.playerbuffs} playerdebuffs = {props.playerdebuffs}cardInfo={card}></Card></div>
       )}
     </div>
   );
@@ -20,5 +21,9 @@ export default function Hand(props) {
 
 Hand.propTypes = {
   cards: PropTypes.array,
-  useCard: PropTypes.func
+  useCard: PropTypes.func,
+  player: PropTypes.object,
+  playerbuffs: PropTypes.object,
+  playerdebuffs: PropTypes.object,
+  enemydebuffs: PropTypes.object
 }
