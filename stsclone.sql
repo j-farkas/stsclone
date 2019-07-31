@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jul 31, 2019 at 06:09 PM
--- Server version: 5.7.26
--- PHP Version: 7.3.7
+-- Generation Time: Jul 31, 2019 at 11:39 PM
+-- Server version: 5.6.38
+-- PHP Version: 7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -43,8 +43,10 @@ INSERT INTO `Card` (`Id`, `Name`, `Cost`, `Type`, `Effects`, `Color`, `Upgraded`
 (17, 'Demon Form', 3, 'Power', '3 demonform', 'Red', 1, 'At the end of every turn gain 3 Strength', 2),
 (18, 'Slice', 0, 'Attack', '5 damage', 'Red', 0, 'Deal 5 damage', 1),
 (19, 'Slice', 0, 'Attack', '5 damage', 'Red', 1, 'Deal 8 damage', 1),
-(20, 'Heavy Strike', 2, 'Attack', '5 damage,5 damage,5 damage', 'Red', 0, 'Deal 5 damage 3 times', 2),
-(21, 'Heavy Strike', 2, 'Attack', '5 damage,5 damage,5 damage,5 damage,5 damage', 'Red', 1, 'Deal 5 damage 5 times', 3);
+(20, 'Heavy Strike', 2, 'Attack', '5 damage,5 damage,5 damage', 'Red', 0, 'Deal 5 damage 3 times', 1),
+(21, 'Heavy Strike', 2, 'Attack', '5 damage,5 damage,5 damage,5 damage,5 damage', 'Red', 1, 'Deal 5 damage 5 times', 2),
+(22, 'Neutralize', 0, 'Attack', '4 damage,1 weak', 'Green', 0, 'Deal 4 damage, apply 1 weakness', 1),
+(23, 'Neutralize', 0, 'Attack', '4 damage,2 weak', 'Green', 1, 'Deal 4 damage, apply 2 weakness', 2);
 
 --
 -- Dumping data for table `Enemy`
