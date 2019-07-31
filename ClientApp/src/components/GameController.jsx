@@ -99,6 +99,50 @@ export class GameController extends React.Component {
       enemydebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0}})
   }
 
+  restart(){
+    this.setState({
+      home: true,
+      start: false,
+      loading: true,
+      nextEnemy: {},
+      map: false,
+      battle: false,
+      reward: false,
+      viewdeck: false,
+      difficulty: 1,
+      class: "Red",
+      playerdebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
+      playerbuffs: {str: 0, dex: 0},
+      enemybuffs: {str: 0, dex: 0},
+      enemydebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
+      deck: [],
+      hand: [],
+      discard: [],
+      activeEnemy: {hp:12, nextAttack: ""},
+      player: {hp:100, maxHP: 100, energy: 3, block: 0},
+      rewards: [],
+      gameOver: false
+      })
+      fetch('api/SampleData/Enemies/1')
+        .then(response => response.json())
+        .then(data => {
+           console.log(data);
+           this.setState({ nextEnemy: data});
+           console.log(this.state);
+           let deck = [];
+           for(let i = 0; i < 5; i++){
+             deck.push({id:1, name: "Strike", cost: 1, type: "Attack", effects: "6 damage", color: this.state.class, upgraded: 0, cardText: "Deal 6 damage"});
+             deck.push({id:1, name: "Defend", cost: 1, type: "Skill", effects: "6 block", color: this.state.class, upgraded: 0, cardText: "Block 6 damage"});
+           }
+           this.setState ({ deck: this.shuffle(deck)});
+           this.setState({hand: this.state.deck.slice(0,5)})
+           this.setState({deck: this.state.deck.slice(5)});
+          this.setState({loading: false});
+
+        });
+  }
+
+
   handleStartBattle(){
     this.setState({map:false, battle: true});
     fetch('api/SampleData/Rewards/'+this.state.difficulty)
@@ -274,7 +318,7 @@ export class GameController extends React.Component {
       )
     }if(this.state.gameOver === true){
       return(
-        <div className="page">You Died
+        <div className="page">You Died<button onClick={()=>this.restart()}>Start over</button>
         </div>
       );
     }
