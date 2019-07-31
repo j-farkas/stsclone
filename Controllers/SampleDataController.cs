@@ -28,7 +28,7 @@ namespace my_new_app.Controllers
         {
           using (var db = new DataContext())
           	{
-    					 List<Card> theCards = db.Card.Where(e => e.Rarity <= level).ToList();
+    					 List<Card> theCards = db.Card.Where(e => e.Rarity <= level && e.Rarity > 0).ToList();
                return theCards;
 
     				}

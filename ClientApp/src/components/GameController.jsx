@@ -124,16 +124,27 @@ export class GameController extends React.Component {
     console.log(number);
     this.state.player.energy = 3;
     if(effect === 'damage'){
+      number = parseInt(number) + this.state.enemybuffs.str;
+      if(this.state.playerdebuffs.vuln > 0){
+        number = parseInt(number*1.5);
+      }
+      if(this.state.enemydebuffs.weak > 0){
+        number = parseInt(number*.5);
+      }
       if(this.state.player.block > number){
         this.state.player.block -= number;
       }else{
         this.state.player.hp -= (number-this.state.player.block);
       }
       this.setState({player: this.state.player})
+    }else if(effect === 'demonform'){
+        this.state.enemydebuffs.demonform += parseInt(number);
+        this.setState({enemydebuffs: this.state.enemydebuffs});
     }else{
       console.log(effect);
       this.state.playerdebuffs[effect] += parseInt(number);
       this.setState({playerdebuffs: this.state.playerdebuffs});
+      }
       //end of turn effects
       if(this.state.playerdebuffs.vuln > 0){
         this.state.playerdebuffs.vuln--;
@@ -141,14 +152,23 @@ export class GameController extends React.Component {
       if(this.state.playerdebuffs.weak > 0){
         this.state.playerdebuffs.weak--;
       }
+      if(this.state.enemydebuffs.vuln > 0){
+        this.state.enemydebuffs.vuln--;
+      }
+      if(this.state.enemydebuffs.weak > 0){
+        this.state.enemydebuffs.weak--;
+      }
       if(this.state.playerdebuffs.frail > 0){
         this.state.playerdebuffs.frail--;
       }
       if(this.state.playerdebuffs.demonform > 0){
         this.state.playerbuffs.str+=this.state.playerdebuffs.demonform;
       }
-      this.setState({playerdebuffs: this.state.playerdebuffs, playerbuffs: this.state.playerbuffs})
-    }
+      if(this.state.enemydebuffs.demonform > 0){
+        this.state.enemybuffs.str+=this.state.enemydebuffs.demonform;
+      }
+      this.setState({playerdebuffs: this.state.playerdebuffs, playerbuffs: this.state.playerbuffs, enemybuffs: this.state.enemybuffs, enemydebuffs: this.state.enemydebuffs})
+
 
     let activeEnemy = this.state.activeEnemy;
     activeEnemy.nextAttack = nextAttack;
@@ -182,6 +202,14 @@ export class GameController extends React.Component {
         console.log(el);
         switch(type){
           case 'damage':
+          if(this.state.enemydebuffs.vuln > 0){
+            value = parseInt(value * 1.5);
+          }
+          if(this.state.playerdebuffs.weak > 0){
+            value = parseInt(value * .5);
+            console.log(value);
+          }
+
             this.state.activeEnemy.hp -= value+this.state.playerbuffs.str;
             this.setState({activeEnemy: this.state.activeEnemy});
             if(this.state.activeEnemy.hp <= 0){
@@ -189,6 +217,9 @@ export class GameController extends React.Component {
             }
           break;
           case 'block':
+          if(this.state.playerdebuffs.frail > 0){
+            value = parseInt(value * .5);
+          }
             this.state.player.block += value;
             this.setState({player: this.state.player})
           break;
@@ -263,7 +294,7 @@ export class GameController extends React.Component {
     }if(this.state.battle === true){
       return(
         <div className="page"><Header player={this.state.player} viewDeck = {this.viewDeck}></Header>
-          <Enemy enemy={this.state.nextEnemy} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
+          <Enemy enemy={this.state.nextEnemy} enemybuffs = {this.state.enemybuffs} enemydebuffs = {this.state.enemydebuffs} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
           <Hand cards={this.state.hand} useCard = {this.useCard}></Hand>
         </div>
       );

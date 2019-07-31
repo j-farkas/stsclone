@@ -8,7 +8,7 @@ function Home(props){
     }
     return (
         <div>
-        <h1>This is a clone of Slay the Spire</h1>
+        <h1>This is the splash screen</h1>
         <h2 onClick={() => setHome()}>New Game</h2>
         </div>
     );

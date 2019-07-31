@@ -14,11 +14,14 @@ export default function Enemy(props) {
     random = true;
   }
   console.log(attacks);
-
+  let nextAttack = props.activeEnemy.nextAttack;
+  if(nextAttack.split(' ')[1] === 'damage'){
+    nextAttack = nextAttack.split(' '[0]+props.enemybuffs.str) + ' ' + nextAttack.split(' ')[1];
+  }
 
   return(
     <div className='Enemy'>
-      <h3>Next Attack will apply: {props.activeEnemy.nextAttack} HP: {props.activeEnemy.hp}</h3>
+      <h3>Next Attack will apply: {nextAttack} HP: {props.activeEnemy.hp}</h3>
       <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button>
     </div>
   );
@@ -27,5 +30,7 @@ export default function Enemy(props) {
 Enemy.propTypes = {
   enemy: PropTypes.object,
   activeEnemy: PropTypes.object,
-  endTurn: PropTypes.func
+  endTurn: PropTypes.func,
+  enemybuffs: PropTypes.object,
+  enemydebuffs: PropTypes.object
 }
