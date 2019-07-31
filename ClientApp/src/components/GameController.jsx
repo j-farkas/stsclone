@@ -43,6 +43,7 @@ export class GameController extends React.Component {
       viewdeck: false,
       difficulty: 1,
       class: "Red",
+      exhaust: [],
       playerdebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
       playerbuffs: {str: 0, dex: 0},
       enemybuffs: {str: 0, dex: 0},
@@ -111,12 +112,13 @@ export class GameController extends React.Component {
       viewdeck: false,
       difficulty: 1,
       class: "Red",
-      playerdebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
+      playerdebuffs: {weak: 0, vuln: 0, frail: 0, poison: 0},
       playerbuffs: {str: 0, dex: 0},
       enemybuffs: {str: 0, dex: 0},
-      enemydebuffs: {weak: 0, vuln: 0, frail: 0, demonform: 0},
+      enemydebuffs: {weak: 0, vuln: 0, frail: 0, poison: 0},
       deck: [],
       hand: [],
+      exhaust: [],
       discard: [],
       activeEnemy: {hp:12, nextAttack: ""},
       player: {hp:100, maxHP: 100, energy: 3, block: 0},
@@ -182,7 +184,11 @@ export class GameController extends React.Component {
       }
       this.setState({player: this.state.player})
     }else if(effect === 'demonform'){
-        this.state.enemydebuffs.demonform += parseInt(number);
+      if(Object.keys(this.state.enemybuffs).includes('demonform') === true){
+        this.state.enemybuffs.demonform += parseInt(number);
+      }else{
+        this.state.enemybuffs.demonform = parseInt(number);
+      }
         this.setState({enemydebuffs: this.state.enemydebuffs});
     }else{
       console.log(effect);
@@ -190,26 +196,35 @@ export class GameController extends React.Component {
       this.setState({playerdebuffs: this.state.playerdebuffs});
       }
       //end of turn effects
-      if(this.state.playerdebuffs.vuln > 0){
-        this.state.playerdebuffs.vuln--;
+
+      Object.keys(this.state.playerdebuffs).forEach((el)=>{
+      if(this.state.playerdebuffs[el] > 0){
+      this.state.playerdebuffs[el]--;
       }
-      if(this.state.playerdebuffs.weak > 0){
-        this.state.playerdebuffs.weak--;
+      if(this.state.enemydebuffs[el] > 0){
+      this.state.enemydebuffs[el]--;
       }
-      if(this.state.enemydebuffs.vuln > 0){
-        this.state.enemydebuffs.vuln--;
+    })
+      // if(this.state.playerdebuffs.vuln > 0){
+      //   this.state.playerdebuffs.vuln--;
+      // }
+      // if(this.state.playerdebuffs.weak > 0){
+      //   this.state.playerdebuffs.weak--;
+      // }
+      // if(this.state.enemydebuffs.vuln > 0){
+      //   this.state.enemydebuffs.vuln--;
+      // }
+      // if(this.state.enemydebuffs.weak > 0){
+      //   this.state.enemydebuffs.weak--;
+      // }
+      // if(this.state.playerdebuffs.frail > 0){
+      //   this.state.playerdebuffs.frail--;
+      // }
+      if(this.state.playerbuffs.demonform > 0){
+        this.state.playerbuffs.str+=this.state.playerbuffs.demonform;
       }
-      if(this.state.enemydebuffs.weak > 0){
-        this.state.enemydebuffs.weak--;
-      }
-      if(this.state.playerdebuffs.frail > 0){
-        this.state.playerdebuffs.frail--;
-      }
-      if(this.state.playerdebuffs.demonform > 0){
-        this.state.playerbuffs.str+=this.state.playerdebuffs.demonform;
-      }
-      if(this.state.enemydebuffs.demonform > 0){
-        this.state.enemybuffs.str+=this.state.enemydebuffs.demonform;
+      if(this.state.enemybuffs.demonform > 0){
+        this.state.enemybuffs.str+=this.state.enemybuffs.demonform;
       }
       this.setState({playerdebuffs: this.state.playerdebuffs, playerbuffs: this.state.playerbuffs, enemybuffs: this.state.enemybuffs, enemydebuffs: this.state.enemydebuffs})
 
@@ -278,9 +293,20 @@ export class GameController extends React.Component {
           }
           break;
           case 'demonform':
-            this.state.playerdebuffs.demonform+=value;
-            this.setState({playerdebuffs: this.state.playerdebuffs});
+          if(this.state.playerbuffs.demonform > 0){
+            this.state.playerbuffs.demonform+=value;
+          }else{
+            this.state.playerbuffs.demonform=value;
+          }
+            this.setState({playerbuffs: this.state.playerbuffs});
           break;
+          default:
+          if(this.state.enemydebuffs > 0){
+            this.state.enemydebuffs[type] += value;
+          }else{
+            this.state.enemydebuffs[type] = value;
+          }
+
         }
       }
     )
