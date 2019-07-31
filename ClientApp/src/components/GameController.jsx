@@ -191,6 +191,10 @@ export class GameController extends React.Component {
     this.setState({discard: []});
     this.state.player.block = 0;
     this.setState({player: this.state.player})
+    if(this.state.player.hp <= 0){
+      //You died
+      this.setState({gameOver: true});
+    }
   }
 
   useCard(cardText, index){
@@ -268,7 +272,13 @@ export class GameController extends React.Component {
           <Home setHome={this.handleSetHomeFalse} />
         </div>
       )
-    }if(this.state.viewdeck === true){
+    }if(this.state.gameOver === true){
+      return(
+        <div className="page">You Died
+        </div>
+      );
+    }
+    if(this.state.viewdeck === true){
       return(
         <div className="page"><Header player={this.state.player} viewDeck = {this.viewDeck}></Header>
           <Deck cards={this.state.deck.concat(this.state.hand).concat(this.state.discard)}></Deck>
