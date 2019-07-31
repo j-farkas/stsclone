@@ -8,7 +8,7 @@ export default function Header(props) {
     document.getElementsByTagName('span').item(0).classList.toggle('show');
   }
 
-  return(<div className='header'>HP:{props.player.hp}/{props.player.maxHP} Block: {props.player.block} Energy: {props.player.energy}/3 <span className='deck' onClick={()=>viewDeck()}>View Deck</span></div>
+  return(<div className='header'><h1>HP:{props.player.hp}/{props.player.maxHP} Block: {props.player.block} Energy: {props.player.energy}/3 <span className='deck' onClick={()=>viewDeck()}>View Deck</span></h1></div>
   );
 }
 

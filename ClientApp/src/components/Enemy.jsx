@@ -24,7 +24,7 @@ export default function Enemy(props) {
 
       return(
         <div className='Enemy'>
-          <h3>Next Attack: {(parseInt(props.activeEnemy.nextAttack.split(' ')[1])+props.enemybuffs.str)*modifier} {props.activeEnemy.nextAttack.split(' ')[2]}<br></br> HP remaining: {props.activeEnemy.hp}</h3>
+          <h3>Enemy's Next Attack: {(parseInt(props.activeEnemy.nextAttack.split(' ')[1])+props.enemybuffs.str)*modifier} {props.activeEnemy.nextAttack.split(' ')[2]}<br></br> HP remaining: {props.activeEnemy.hp}</h3>
           <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button>
         </div>
       );
@@ -32,7 +32,7 @@ export default function Enemy(props) {
 
   return(
     <div className='Enemy'>
-      <h3>Next Attack will apply: {props.activeEnemy.nextAttack.split(' ')[1]} {props.activeEnemy.nextAttack.split(' ')[2]} <br></br>HP remaining: {props.activeEnemy.hp}</h3>
+      <h3>Enemy's Next Attack will apply: {props.activeEnemy.nextAttack.split(' ')[1]} {props.activeEnemy.nextAttack.split(' ')[2]} <br></br>HP remaining: {props.activeEnemy.hp}</h3>
       <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button>
     </div>
   );
