@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jul 31, 2019 at 11:39 PM
+-- Generation Time: Aug 01, 2019 at 03:54 PM
 -- Server version: 5.6.38
 -- PHP Version: 7.2.1
 
@@ -46,7 +46,12 @@ INSERT INTO `Card` (`Id`, `Name`, `Cost`, `Type`, `Effects`, `Color`, `Upgraded`
 (20, 'Heavy Strike', 2, 'Attack', '5 damage,5 damage,5 damage', 'Red', 0, 'Deal 5 damage 3 times', 1),
 (21, 'Heavy Strike', 2, 'Attack', '5 damage,5 damage,5 damage,5 damage,5 damage', 'Red', 1, 'Deal 5 damage 5 times', 2),
 (22, 'Neutralize', 0, 'Attack', '4 damage,1 weak', 'Green', 0, 'Deal 4 damage, apply 1 weakness', 1),
-(23, 'Neutralize', 0, 'Attack', '4 damage,2 weak', 'Green', 1, 'Deal 4 damage, apply 2 weakness', 2);
+(23, 'Neutralize', 0, 'Attack', '4 damage,2 weak', 'Green', 1, 'Deal 4 damage, apply 2 weakness', 2),
+(24, 'Offering', 0, 'Skill', '6 selfdamage,4 draw,2 energy', 'Red', 0, 'Take 6 damage, draw 4 cards, gain 2 energy', 3),
+(25, 'Hemokinesis', 1, 'Attack', '20 damage,3 selfdamage', 'Red', 0, 'Deal 20 damage, take 3 damage', 1),
+(26, 'Hemokinesis', 1, 'Attack', '25 damage,2 selfdamage', 'Red', 1, 'Deal 25 damage, take 2 damage', 2),
+(27, 'Bloodletting', 0, 'Skill', '3 selfdamage,1 energy', 'Red', 0, 'Take 3 damage, gain 1 energy', 1),
+(28, 'Bloodletting', 1, 'Skill', '3 selfdamage,2 energy', 'Red', 0, 'Take 3 damage, gain 2 energy', 2);
 
 --
 -- Dumping data for table `Enemy`
@@ -58,7 +63,11 @@ INSERT INTO `Enemy` (`Id`, `Attacks`, `RewardClass`, `HP`) VALUES
 (3, 'random, 30 damage, 5 frail, 5 weak, 5 vuln', 3, 50),
 (4, 'random, 1 damage, 10 weak, 1 demonform', 4, 100),
 (5, 'random, 8 damage, 12 damage', 1, 15),
-(6, 'random, 6 damage, 12 damage, 18 damage', 2, 35);
+(6, 'random, 6 damage, 12 damage, 18 damage', 2, 35),
+(7, 'random, 9 damage, 6 damage, 12 damage', 3, 55),
+(8, 'random, 1 damage, 1 demonform', 7, 500),
+(9, 'random, 11 damage, 3 vuln', 5, 100),
+(10, 'random, 15 damage, 10 vuln, 10 frail', 6, 200);
 
 --
 -- Dumping data for table `__EFMigrationsHistory`
