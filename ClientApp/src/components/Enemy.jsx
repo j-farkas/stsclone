@@ -15,10 +15,10 @@ export default function Enemy(props) {
   console.log(parseInt(props.activeEnemy.nextAttack.split(' ')[1])+props.enemybuffs.str+ ' ' + props.activeEnemy.nextAttack.split(' ')[2]);
   let modifier = 1;
   if(props.enemydebuffs.weak > 0){
-    modifier = parseInt(modifier * .5);
+    modifier = modifier * .5;
   }
   if(props.playerdebuffs.vuln > 0){
-    modifier = parseInt(modifier * 1.5);
+    modifier = modifier * 1.5;
   }
   if(props.activeEnemy.nextAttack.split(' ')[2] === 'damage'){
 

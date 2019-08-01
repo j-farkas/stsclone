@@ -300,6 +300,14 @@ export class GameController extends React.Component {
           }
             this.setState({playerbuffs: this.state.playerbuffs});
           break;
+          case 'energy':
+            this.state.player.energy += value;
+            this.setState({player: this.state.player});
+          break;
+          case 'selfdamage':
+              this.state.player.hp -= value;
+              this.setState({player: this.state.player});
+          break;
           default:
           if(this.state.enemydebuffs > 0){
             this.state.enemydebuffs[type] += value;
