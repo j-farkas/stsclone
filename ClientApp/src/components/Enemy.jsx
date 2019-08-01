@@ -24,16 +24,18 @@ export default function Enemy(props) {
 
       return(
         <div className='Enemy'>
-          <h3>Enemy's Next Attack: {(parseInt(props.activeEnemy.nextAttack.split(' ')[1])+props.enemybuffs.str)*modifier} {props.activeEnemy.nextAttack.split(' ')[2]}<br></br> HP remaining: {props.activeEnemy.hp}</h3>
-          <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button>
+          <h3>Enemy's Next Attack: {(parseInt(props.activeEnemy.nextAttack.split(' ')[1])+props.enemybuffs.str)*modifier} {props.activeEnemy.nextAttack.split(' ')[2]}<br></br> HP remaining: {props.activeEnemy.hp}<br></br>Vulnerability: {props.enemydebuffs.vuln} Weakness: {props.enemydebuffs.weak}</h3>
+          <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button><br></br>
+          <h4>Player status:<br></br>Strength: {props.playerbuffs.str}<br></br>Vulnerability: {props.playerdebuffs.vuln} Weakness: {props.playerdebuffs.weak} Frailty: {props.playerdebuffs.frail}</h4>
         </div>
       );
     }
 
   return(
     <div className='Enemy'>
-      <h3>Enemy's Next Attack will apply: {props.activeEnemy.nextAttack.split(' ')[1]} {props.activeEnemy.nextAttack.split(' ')[2]} <br></br>HP remaining: {props.activeEnemy.hp}</h3>
-      <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button>
+      <h3>Enemy's Next Attack will apply: {props.activeEnemy.nextAttack.split(' ')[1]} {props.activeEnemy.nextAttack.split(' ')[2]} <br></br>HP remaining: {props.activeEnemy.hp}<br></br>Vulnerability: {props.enemydebuffs.vuln} Weakness: {props.enemydebuffs.weak}</h3>
+      <button onClick ={()=>endTurn(props.activeEnemy.nextAttack.split(' ')[1], props.activeEnemy.nextAttack.split(' ')[2])}>End Turn</button><br></br>
+      <h4>Player status:<br></br>Strength: {props.playerbuffs.str}<br></br>Vulnerability: {props.playerdebuffs.vuln} Weakness: {props.playerdebuffs.weak} Frailty: {props.playerdebuffs.frail}</h4>
     </div>
   );
 }
