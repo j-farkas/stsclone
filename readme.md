@@ -1,3 +1,42 @@
+# _STS Clone_
+
+A partial clone of the rogue-like deckbuilder Slay the Spire
+
+#### By
+Jared Farkas
+
+## Description
+
+Players begin with a basic deck and fight weak enemies. After enemies are defeated they are presented with a choice of random cards and improve their deck in order to fight tougher enemies. The player tries to get as far as they can
+
+## Setup/Installation Requirements
+
+* Clone the project from https://github.com/j-farkas/stsclone
+* Import the database in the root directory.
+* Dotnet ef database update to import the database structure
+* Import the database data using the attached SQL file
+* Host using dotnet
+* Run in browser
+
+## Known Bugs
+None
+
+## Technologies Used
+* HTML
+* CSS
+* C#
+* .NET
+* Jquery
+* React
+* EF core
+* MySQL
+
+### License
+This software is licensed under the MIT license
+
+Copyright (c) 2019 **_Jared Farkas_**
+
+
 ## Planned Component Tree
 ![](/clientapp/src/assets/img/componenttree.png)
 
