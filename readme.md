@@ -12,8 +12,7 @@ Players begin with a basic deck and fight weak enemies. After enemies are defeat
 ## Setup/Installation Requirements
 
 * Clone the project from https://github.com/j-farkas/stsclone
-* Import the database in the root directory.
-* Dotnet ef database update to import the database structure
+* dotnet ef database update to import the database structure
 * Import the database data using the attached SQL file
 * Host using dotnet
 * Run in browser
