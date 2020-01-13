@@ -1,6 +1,5 @@
 .Hand {
-  display: grid;
-  grid-template-columns: repeat(7);
+  display:inline-block;
 }
 
 .available{

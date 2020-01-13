@@ -3,9 +3,32 @@
 }
 
 .Attack{
+  height: 10em;
+  width: auto;
   background-color: #cfa5a7;
+}
+
+.circled{
+  border: black solid 1px;
+  border-radius: 360px;
+  text-align: left;
+  font-size: 1em;
+  padding-right: .1em;
+  padding-left: .1em;
 }
 
 .Power{
   background-color: #a5aecf;
+}
+
+.Power:hover{
+  background-color: #858eaf;
+}
+
+.Attack:hover{
+  background-color: #af8587;
+}
+
+.Skill:hover{
+  background-color: #8daf85;
 }

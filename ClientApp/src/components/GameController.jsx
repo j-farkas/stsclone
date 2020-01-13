@@ -60,7 +60,7 @@ export class GameController extends React.Component {
         this.handleGameStart = this.handleGameStart.bind(this);
         this.endTurn = this.endTurn.bind(this);
         this.pickReward = this.pickReward.bind(this);
-        this.useCard = this.useCard.bind(this);
+        this.playCard = this.playCard.bind(this);
         this.viewDeck = this.viewDeck.bind(this);
 }
 
@@ -256,7 +256,7 @@ export class GameController extends React.Component {
     }
   }
 
-  useCard(cardText, index){
+  playCard(cardText, index){
     if(this.state.player.energy >= this.state.hand[index].cost){
       let effects = cardText.split(',');
       effects.forEach((el)=>{
@@ -383,7 +383,7 @@ export class GameController extends React.Component {
       return(
         <div className="page"><Header player={this.state.player} viewDeck = {this.viewDeck}></Header>
           <Enemy enemy={this.state.nextEnemy} enemybuffs = {this.state.enemybuffs} enemydebuffs = {this.state.enemydebuffs} playerbuffs = {this.state.playerbuffs} playerdebuffs = {this.state.playerdebuffs} endTurn = {this.endTurn} activeEnemy={this.state.activeEnemy}></Enemy>
-          <Hand  enemybuffs = {this.state.enemybuffs} enemydebuffs = {this.state.enemydebuffs} playerbuffs = {this.state.playerbuffs} playerdebuffs = {this.state.playerdebuffs} cards={this.state.hand} useCard = {this.useCard} player = {this.state.player}></Hand>
+          <Hand  enemybuffs = {this.state.enemybuffs} enemydebuffs = {this.state.enemydebuffs} playerbuffs = {this.state.playerbuffs} playerdebuffs = {this.state.playerdebuffs} cards={this.state.hand} playCard = {this.playCard} player = {this.state.player}></Hand>
         </div>
       );
     }if(this.state.reward === true){

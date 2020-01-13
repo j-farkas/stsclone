@@ -4,8 +4,8 @@ import Card from './Card';
 import './Hand.css';
 
 export default function Hand(props) {
-  function useCard(cardText, index){
-    props.useCard(cardText, index);
+  function playCard(cardText, index){
+    props.playCard(cardText, index);
   }
 
 
@@ -13,7 +13,7 @@ export default function Hand(props) {
     <div className='Hand'>
       {props.cards.map((card, index) =>
         <div className={card.cost <=  props.player.energy ? 'available' : 'not'}
-            onClick={()=>useCard(card.effects, index)}><Card enemybuffs = {props.enemybuffs} enemydebuffs = {props.enemydebuffs} playerbuffs = {props.playerbuffs} playerdebuffs = {props.playerdebuffs}cardInfo={card}></Card></div>
+            onClick={()=>playCard(card.effects, index)}><Card enemybuffs = {props.enemybuffs} enemydebuffs = {props.enemydebuffs} playerbuffs = {props.playerbuffs} playerdebuffs = {props.playerdebuffs}cardInfo={card}></Card></div>
       )}
     </div>
   );
@@ -21,7 +21,7 @@ export default function Hand(props) {
 
 Hand.propTypes = {
   cards: PropTypes.array,
-  useCard: PropTypes.func,
+  playCard: PropTypes.func,
   player: PropTypes.object,
   playerbuffs: PropTypes.object,
   playerdebuffs: PropTypes.object,

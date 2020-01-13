@@ -5,6 +5,7 @@ import './Card.css';
 export default function Card(props) {
   return(
     <div className= {props.cardInfo.type}>
+      <h2> <span className = 'circled'>{props.cardInfo.cost}</span></h2>
       <h6>{props.cardInfo.name} - {props.cardInfo.cardText}</h6>
       <h6>Energy cost:{props.cardInfo.cost}</h6>
 
