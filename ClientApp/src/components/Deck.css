@@ -1,0 +1,5 @@
+.deckCard{
+  display: inline-block;
+  border: outset 2px black;
+  border-radius: 8px;
+}

@@ -3,8 +3,6 @@
 }
 
 .Attack{
-  height: 10em;
-  width: auto;
   background-color: #cfa5a7;
 }
 
@@ -15,8 +13,34 @@
   font-size: 1em;
   padding-right: .1em;
   padding-left: .1em;
+  background-color: white;
+  margin-right: .7em;
 }
 
+.card{
+  height:15em;
+  width:10em;
+}
+
+.type{
+  font-size:1em;
+}
+
+.cardImage{
+  height:6.5em;
+  border: black solid .1em;
+}
+
+.cardText{
+  font-size: 1.2em;
+}
+.cardName{
+  font-size:.5em;
+}
+hr{
+  margin-bottom:0em;
+  margin-top:0em;
+}
 .Power{
   background-color: #a5aecf;
 }
