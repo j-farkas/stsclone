@@ -26,7 +26,6 @@ None
 * CSS
 * C#
 * .NET
-* Jquery
 * React
 * EF core
 * MySQL
